@@ -8,14 +8,14 @@ export interface IProduct { // интерфейс для товара
   }
   
   export interface IProductList { // интерфейс для списка товаров
-    products: string[];
+    products: IProduct[];
     total: number;  
   }
   
   export type TPayment = 'online' | 'cash'; // тип оплаты
   
   export interface IOrderForm { // интерфейс для формы заказа
-    payment: string;
+    payment: TPayment;
     address: string;
     email: string;
     phone: string;
@@ -34,14 +34,6 @@ export interface IProduct { // интерфейс для товара
   export interface IBasket { // интерфейс для корзины
     products: IProduct[];
     total: number | null;  
-  }
-  
-  
-  export interface IUser { // интерфейс для пользователя
-    address: string;
-    email: string ;
-    phone: string;
-    payment: string;  
   }
   
   export interface IWebLarekAPI { // интерфейс API клиента
@@ -70,48 +62,29 @@ export interface IProduct { // интерфейс для товара
     getProduct(): void;  
   }
   
-  export interface IModalContainer { // интерфейс для контейнера модальных окон
-    overlay: HTMLElement;
-    closeButton: HTMLElement;
-    openModal(): void;
-    closeModal(): void;
-    closeModalByEsc(): void;
-    closeModalByOverlay(): void;
-  }
-  
-  export interface IModal { // интерфейс для модального окна
-    title?: string;
-    product: IProduct;
-    basket: IBasket;
-    form: IOrderForm;
+  export interface IModalData { // интерфейс для содержимого модального окна
     content: HTMLElement;
   }
   
-  export interface ISuccessModal extends IModal { // интерфейс для модального окна успешно созданного заказа
+  export interface ISuccessModal { // интерфейс для модального окна успешно созданного заказа
     totalPrice: number;
-    mainPageButton: HTMLElement;
-    getTotalPrice(): number;
   }
   
-  // Возможно будет иметь смысл выделить отдельный компонент Form,
-  // как обертку для полей формы Formfields.
-  // Тогда пригодятся следующие интерфейсы:
-  
-  export interface IForm {
-    fields: IFormField[];
-    button: HTMLElement;
-    displayNextFields(): void;
-    submit(): void;
+  export interface IAppState { // интерфейс глобального состояния приложения
+    basket: IProduct[];
+    order: IOrder;
+    catalog: IProductList;
+    preview: string | null;
   }
   
-  export interface IFormField {
-    name: string;
-    label: string;
-    placeholder: string;
-    value: string;
+  export interface IMainPage { // интерфейс для главной страницы приложения
+    catalog: HTMLElement[];
+    basket: HTMLElement;
+    counter: number;
+    locked: boolean;
+  }
+  
+  export interface IForm { // интерфейс для структуры данных формы
     isValid: boolean;
-    error: string;
-    setValue(): void;
-    setValidation(): void;
-    setError(): void;
+    errors: string[];
   }
