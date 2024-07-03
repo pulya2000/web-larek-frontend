@@ -39,6 +39,7 @@ npm run build
 
 ```
 yarn build
+
 ```
 
 ## Архитектура приложения
@@ -97,7 +98,7 @@ MVP-архитектура позволяет не связывать между
 - `baseUrl: string` - базовый URL внешнего API
 - `options: RequestInit` - опции для конфигурации запросов
 Методы класса:
-- `getProducts(uri: string): Promise<object>` - получает от сервера список продуктов 
+- `getProducts(uri: string): Promise<IProductList>` - получает от сервера список продуктов 
 - `getProductById(uri: string, id: string): Promise<object>` - получает от сервера данные конкретного продукта по его id
 - `postOrder(uri: string, data: object, method: ApiPostMethods = 'POST'): Promise<object>` - отправляет на сервер заказ
 
@@ -128,14 +129,14 @@ MVP-архитектура позволяет не связывать между
 Свойства класса:
 - `basket: IProduct[]` - данные о товарах в корзине
 - `order: IOrder` - данные о заказе
-- `catalog: IProductList` - список всех товаров
+- `catalog: IProduct[]` - список всех товаров
 - `preview: string | null` - данные об id товара для предпросмотра
 Методы класса:
-- `addToBasket(id: string): void` - добавить товар в корзину
+- `addToBasket(item: IProduct): void` - добавить товар в корзину
 - `removeFromBasket(id: string): void` - удалить товар из корзины
 - `clearBasket(): void` - очистить корзину
 - `getTotalPrice(): number` - рассчитать итоговую стоимость товаров
-- `setCatalog(products: IProduct[]): void` - обновляет список товаров, оповещает об изменениях в каталоге
+- `setCatalog(products: IProductList): void` - обновляет список товаров, оповещает об изменениях в каталоге
 - `setPreview(product: IProduct): void` - установка предварительного просмотра выбранного товара, оповещает об изменениях в состоянии
 
 ## Компоненты представления
@@ -148,7 +149,7 @@ MVP-архитектура позволяет не связывать между
 Свойства класса:
 - `catalog: HTMLElement[]` - контейнер для списка(каталога) товаров 
 - `basket: HTMLElement` - корзина
-- `counter: number` - счетчик количества товаров в корзине
+- `counter: HTMLElement` - счетчик количества товаров в корзине
 - `locked: boolean` - флаг, указывающий на блокировку страницы для пользовательских взаимодействий
 Методы класса, сеттеры:
 - `set catalog(products: HTMLElement[]): void` - установить список товаров
@@ -166,11 +167,11 @@ MVP-архитектура позволяет не связывать между
 - `category: HTMLElement`- категория товара
 - `price: HTMLElement` - стоимость товара
 - `index: HTMLElement` - индекс товара
-<!-- - button: HTMLButtonElement - кнопка на карточке товара -->
+- `button: HTMLButtonElement` - кнопка на карточке товара
 Методы класса, сеттеры и геттеры:
 - `set id(value: string): void` - установить id товара
 - `get id(): string` - получить id товара
-- `set description(value: string | string[]): void` - установить описание товара
+- `set description(value: string): void` - установить описание товара
 - `set image(value: string): void` - установить изображение товара 
 - `set title(value: string): void` - установить название товара
 - `get title(): string` - получить название товара
@@ -180,8 +181,8 @@ MVP-архитектура позволяет не связывать между
 - `get price(): number` - получить цену товара
 - `set index(value: string): void` - установить индекса товара
 - `get index(): string` - получить индекса товара
-<!-- - set titleButton(value: string) - установить подпись кнопке
-- buttonVisibility(value:number | null) - делает кнопку неактивной (если у товара нет стоимости) -->
+- `set titleButton(value: string)` - установить подпись кнопке
+- `buttonVisibility(value:number | null)` - делает кнопку неактивной (если у товара нет стоимости)
 
 ### Класс Basket
 Отображает список выбранных пользователем товаром, с возможностью их удаления из корзины, а также итоговую стоимость продуктов в корзине. Реализуется на основе интерфейса IBasket, наследуется от класса Component.
@@ -192,7 +193,6 @@ MVP-архитектура позволяет не связывать между
 - `total: HTMLElement` - итоговая стоимость товаров
 - `button: HTMLElement` - кнопка для совершения действия с корзиной
 Методы класса, сеттеры:
-- `setDisabled(element: HTMLElement, disabled: boolean): void` - установить состояние кнопки в зависимости от параметра disabled
 - `set products(products: HTMLElement[]): void` - установить элементы товаров в корзине
 - `set total(total: number): void` - установить итоговую сумму товаров в корзине
 - `set selected(products: string[])` - включить или отключить кнопку действия в зависимости от того, выбраны ли товары
@@ -227,7 +227,8 @@ MVP-архитектура позволяет не связывать между
 Конструктор класса:
 - `container: HTMLElement` - элемент DOM, который служит контейнером для компонента успешного события
 Свойства класса:
-- `close: HTMLElement` - элемент кнопки закрытия компонента успешного события
+- `close: HTMLButtonElement` - элемент кнопки закрытия компонента успешного события
+- `totalPrice: HTMLElement` - элемент для отображения общей стоимости заказа
 Методы класса, сеттеры:
 - использует методы, унаследованные от базового класса Component, для управления состоянием и рендерингом
 - `set totalPrice(value: string): void` - установить итоговую сумму списания за покупку 
