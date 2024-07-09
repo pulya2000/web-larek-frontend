@@ -1,19 +1,19 @@
 import { IOrder, IOrderData, IProduct, IWebLarekAPI } from "../types";
-import { API_URL } from "../utils/constants";
 import { Api, ApiListResponse } from "./base/api";
 
 export class WebLarekAPI extends Api implements IWebLarekAPI {
   readonly cdn: string;
 
-  constructor(baseUrl: string, options?: RequestInit) {
-    super(baseUrl, options)
+  constructor(cdn: string, baseUrl: string, options?: RequestInit) {
+    super(baseUrl, options);
+    this.cdn = cdn;
   }
 
   getProducts(): Promise<IProduct[]> {
 		return this.get('/product').then((data: ApiListResponse<IProduct>) => 
       data.items.map((item) => ({
         ...item,
-        image: API_URL + item.image,
+        image: this.cdn + item.image,
       }))
     );
 	};
@@ -22,7 +22,7 @@ export class WebLarekAPI extends Api implements IWebLarekAPI {
     return this.get(`product/${id}`).then(
       (item: IProduct) => ({
         ...item,
-        image: API_URL + item.image,
+        image: this.cdn + item.image,
       })
     );
   };
@@ -32,4 +32,4 @@ export class WebLarekAPI extends Api implements IWebLarekAPI {
       (data: IOrderData) => data
     );
   };
-}
+};

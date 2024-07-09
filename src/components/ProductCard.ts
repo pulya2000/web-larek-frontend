@@ -1,5 +1,4 @@
 import { IProduct } from "../types";
-import { API_URL } from "../utils/constants";
 import { ensureElement } from "../utils/utils";
 import { Component } from "./base/Component";
 
@@ -15,6 +14,7 @@ export class ProductCard extends Component<IProduct> {
   protected _price: HTMLElement;
   protected _index: HTMLElement;
   protected _button: HTMLButtonElement;
+  protected _titleButton: string;
 
   constructor(container: HTMLElement, actions?: ICardActions ) {
     super(container);
@@ -49,11 +49,11 @@ export class ProductCard extends Component<IProduct> {
   }
 
   set image(value: string) {
-    this._image.src = API_URL + value;
+    this.setImage(this._image, value, this.title);
   }
 
   set title(value: string) {
-    this._title.textContent = value;
+    this.setText(this._title, value);
   }
 
   get title(): string {
@@ -83,6 +83,7 @@ export class ProductCard extends Component<IProduct> {
   
   set price(value: number| null) {
     this.setText(this._price, (value) ? `${value.toString()} синапсов`: 'Бесценно');
+    this.buttonVisibility(value);
   }
 
   get price(): number {
@@ -107,5 +108,5 @@ export class ProductCard extends Component<IProduct> {
         this._button.disabled= true;
       }
     }
-  };
-}
+  };  
+};

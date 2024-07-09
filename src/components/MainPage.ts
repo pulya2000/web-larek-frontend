@@ -19,15 +19,15 @@ export class MainPage extends Component<IMainPage> {
     this._basket.addEventListener('click', () => {
       this.events.emit('basket:open');
     });
-  }
+  };
 
   set catalog(products: HTMLElement[]) {
     this._catalog.replaceChildren(...products);
-  }
+  };
   
   set counter(value: number) {
     this.setText(this._counter, String(value));
-  }
+  };
 
   set locked(value: boolean) {
     if (value) {
@@ -35,5 +35,5 @@ export class MainPage extends Component<IMainPage> {
     } else {
       this._wrapper.classList.remove('page__wrapper_locked');
     }
-  }
-}
+  };
+};

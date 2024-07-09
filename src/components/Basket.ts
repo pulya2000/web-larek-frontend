@@ -12,26 +12,26 @@ export class Basket extends Component<IBasket> {
     super(container);
 
     this._products = ensureElement<HTMLElement>('.basket__list', container);
-    this._total = ensureElement<HTMLElement>('.basket__price', container);
-    this._button = ensureElement<HTMLButtonElement>('.basket__button', container);
+    this._total = this.container.querySelector('.basket__price');
+    this._button = this.container.querySelector('.basket__button');
 
     if (this._button) {
       this._button.addEventListener('click', () => {
-        events.emit('basket:open');
-      })
-    }
-  }
+        events.emit('addressForm:open');
+      });
+    };
+  };
 
   set products(products: HTMLElement[]) {
     this._products.replaceChildren(...products);
-  }
+  };
 
-  set total(total: number) {
-    this._total.textContent = total.toString() + 'синапсов'
-  }
+  set total(total: number) {    
+    this.setText(this._total, total.toString() + ' синапсов');
+  };
 
-  set selected(products: string[]) {
-    const hasProducts = products.length > 0;
+  set selected(products: number) {
+    const hasProducts = products > 0;
     this.setDisabled(this._button, !hasProducts)
-  }
-}
+  };
+};

@@ -21,6 +21,8 @@ export interface IProduct { // интерфейс для товара
   title: string;
   category: string;
   price: number | null;
+  titleButton?: string;
+  index?: string;
 }
 
 export interface IProductList { // интерфейс для списка товаров
@@ -31,7 +33,7 @@ export interface IProductList { // интерфейс для списка тов
 export type TPayment = 'online' | 'cash'; // тип оплаты
 
 export interface IOrderForm { // интерфейс для формы заказа
-  payment: TPayment;
+  payment: string;
   address: string;
   email: string;
   phone: string;
@@ -39,7 +41,7 @@ export interface IOrderForm { // интерфейс для формы заказ
 
 export interface IOrder extends IOrderForm { // интерфейс для заказа 
   total: number | null;
-  products: IProduct[];
+  items: string[];
 }
 
 export interface IOrderData { // интерфейс для оформленного заказа
@@ -88,7 +90,7 @@ export interface ISuccessModal { // интерфейс для модальног
 
 export interface IAppState { // интерфейс глобального состояния приложения
   basket: IProduct[];
-  order: IOrder;
+  order: IOrder | null;
   catalog: IProduct[];
   preview: string | null;
 }
@@ -103,4 +105,8 @@ export interface IMainPage { // интерфейс для главной стр�
 export interface IForm { // интерфейс для структуры данных формы
   isValid: boolean;
   errors: string[];
+}
+
+export interface ISuccessActions {
+  onClick(): void;
 }
