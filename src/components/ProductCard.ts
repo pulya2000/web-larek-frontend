@@ -45,7 +45,7 @@ export class ProductCard extends Component<IProduct> {
   }
 
   set description(value: string) {
-    this._description.textContent = value;
+    this.setText(this._description, value);
   }
 
   set image(value: string) {
@@ -64,19 +64,19 @@ export class ProductCard extends Component<IProduct> {
     this.setText(this._category, value);
     switch (value) {
       case 'софт-скил':
-        this._category.classList.add('card__category_soft');
+        this.toggleClass(this._category, 'card__category_soft', true);
         break;
       case 'хард-скил':
-        this._category.classList.add('card__category_hard');
+        this.toggleClass(this._category, 'card__category_hard', true);
         break;
       case 'дополнительное':
-        this._category.classList.add('card__category_additional');
+        this.toggleClass(this._category, 'card__category_additional', true);
         break;
       case 'кнопка':
-        this._category.classList.add('card__category_button');
+        this.toggleClass(this._category, 'card__category_button', true);
         break;
       default:
-        this._category.classList.add('card__category_other');
+        this.toggleClass(this._category, 'card__category_other', true);
         break;
     }
   }
@@ -90,8 +90,8 @@ export class ProductCard extends Component<IProduct> {
     return Number(this._price.textContent || '');
   }
 
-  set index(value: string){
-    this._index.textContent = value;
+  set index(value: string) {
+    this.setText(this._index, value);
   };
 
   get index(): string{
@@ -99,13 +99,13 @@ export class ProductCard extends Component<IProduct> {
   };
 
   set titleButton(value: string) {
-    this._button.textContent = value;
+    this.setText(this._button, value);
   };
 
-  buttonVisibility(value:number | null) {
+  buttonVisibility(value: number | null) {
     if (value === null) {
       if (this._button) {
-        this._button.disabled= true;
+        this.setDisabled(this._button, true);
       }
     }
   };  

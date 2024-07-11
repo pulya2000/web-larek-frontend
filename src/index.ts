@@ -160,6 +160,14 @@ events.on('address:exist', () => {
   addressForm.isValid = true;
 });
 
+events.on('address:null', (data: {field: keyof IOrderForm, value: string}) => {  
+  appData.setAddress(data.field, '');
+});
+
+events.on('order:submit', () => {
+  events.emit('contactForm:open');
+});
+
 events.on('contactForm:open', () => {
   modal.render({
     content: contactsForm.render({
@@ -177,6 +185,18 @@ events.on('contacts:change', (data: {field: keyof IOrderForm, value: string}) =>
 
 events.on('contact:exist', () => {
   contactsForm.isValid = true;
+});
+
+events.on('email:null', (data: {field: keyof IOrderForm, value: string}) => {  
+  appData.setContact(data.field, '');
+});
+
+events.on('phone:null', (data: {field: keyof IOrderForm, value: string}) => {  
+  appData.setContact(data.field, '');
+});
+
+events.on('contacts:submit', () => {
+  events.emit('successForm:open');
 });
 
 events.on('successForm:open', () => {

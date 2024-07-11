@@ -58,13 +58,15 @@ export class AppState extends Model<IAppState> {
 
   setAddress(field: keyof IOrderForm, value: string) {
     this.order[field] = value;
-    if (this.order.payment) {
+    if (this.order.payment && !!this.order.address) {
       this.events.emit('address:exist', this.order);
-    }
+    };
   };
 
   setContact(field: keyof IOrderForm, value: string) {
     this.order[field] = value;
-    this.events.emit('contact:exist', this.order);
+    if (this.order.email && this.order.phone) {
+      this.events.emit('contact:exist', this.order);
+    };
   };
 };

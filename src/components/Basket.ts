@@ -20,6 +20,7 @@ export class Basket extends Component<IBasket> {
         events.emit('addressForm:open');
       });
     };
+    this.setDisabled(this._button, true);
   };
 
   set products(products: HTMLElement[]) {

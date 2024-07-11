@@ -11,10 +11,16 @@ export class Form<T> extends Component<IForm> {
 
     this._submit = ensureElement<HTMLButtonElement>('button[type=submit]',this.container);
     this._errors = ensureElement<HTMLElement>('.form__errors', this.container);
+
+    
+    this.container.addEventListener('submit', (evt: Event) => {
+      evt.preventDefault();
+      this.events.emit(`${this.container.name}:submit`);
+    });
   };
 
   set isValid(value: boolean) {
-    this._submit.disabled = !value;
+    this.setDisabled(this._submit, !value);
   };
 
   set errors(value: string) {

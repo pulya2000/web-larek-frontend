@@ -18,6 +18,6 @@ export class Success extends Component<ISuccessModal> {
   };
 
   set totalPrice(value: string) {
-    this._totalPrice.textContent = `Списано ${value} синапсов`;
+    this.setText(this._totalPrice, `Списано ${value} синапсов`);
   };
 };
